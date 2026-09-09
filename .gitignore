@@ -1,0 +1,7 @@
+secrets/
+srcs/.env
+data/
+
+.DS_Store
+*.swp
+.vscode/
