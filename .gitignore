@@ -3,5 +3,18 @@ srcs/.env
 data/
 
 .DS_Store
-*.swp
 .vscode/
+.cache/
+.docker/
+.ssh/
+
+.bash_history
+.bash_logout
+.bashrc
+.profile
+.wget-hsts
+.sudo_as_admin_successful
+.vscode-server/
+
+data/
+wp-content/

@@ -34,4 +34,7 @@ logs-%:
 in-%:
 	${DOCKER} exec -it $* sh
 
-.PHONY: all down up clean fclean re psa logs logs-% in-%
+upgrade:
+	apt update && apt upgrade
+
+.PHONY: all down up clean fclean re psa logs logs-% in-% upgrade
