@@ -32,7 +32,7 @@ logs-%:
 	${DOCKER} compose -f ${COMPOSE_FILE} logs -f $*
 
 in-%:
-	${DOCKER} exec -it $* sh
+	${DOCKER} exec -it $* bash
 
 upgrade:
 	apt update && apt upgrade
