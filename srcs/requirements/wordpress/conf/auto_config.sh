@@ -1,6 +1,6 @@
 #!/bin/bash
 
-until mysqladmin -h mariadb -u"$SQL_USER" -p"$SQL_PASSWORD" ping --silent 2>/dev/null; do
+until (echo > /dev/tcp/mariadb/3306) >/dev/null 2>&1; do
     sleep 1
 done
 
