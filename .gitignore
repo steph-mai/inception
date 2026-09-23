@@ -20,3 +20,13 @@ data/
 wp-content/
 .dotnet/
 
+.ICEauthority
+.Xauthority
+.config/
+.dmrc
+.local/
+.mozilla/
+.xsession-errors
+.xsession-errors.old
+Downloads/
+
