@@ -1,6 +1,14 @@
 #!/bin/bash
 set -e
 
+if [ -f "/run/secrets/db_password" ]; then
+    . /run/secrets/db_password
+fi
+
+if [ -f "/run/secrets/db_root_password" ]; then
+    . /run/secrets/db_root_password
+fi
+
 if [ ! -d "/var/lib/mysql/mysql" ]; then
     mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql >/dev/null 2>&1
 fi
@@ -15,17 +23,26 @@ for i in $(seq 1 30); do
     sleep 1
 done
 
-if mysqladmin -uroot -p"${SQL_ROOT_PASSWORD}" ping --silent >/dev/null 2>&1; then
-    ROOT_AUTH=(-uroot -p"${SQL_ROOT_PASSWORD}")
-else
-    ROOT_AUTH=(-uroot)
-fi
+for i in $(seq 1 30); do
+    if mysqladmin ping --silent >/dev/null 2>&1; then
+        break
+    fi
+    sleep 1
+done
 
-mysql "${ROOT_AUTH[@]}" -e "CREATE DATABASE IF NOT EXISTS \`${SQL_DATABASE}\`;"
-mysql "${ROOT_AUTH[@]}" -e "CREATE USER IF NOT EXISTS '${SQL_USER}'@'%' IDENTIFIED BY '${SQL_PASSWORD}';"
-mysql "${ROOT_AUTH[@]}" -e "GRANT ALL PRIVILEGES ON \`${SQL_DATABASE}\`.* TO '${SQL_USER}'@'%';"
-mysql "${ROOT_AUTH[@]}" -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${SQL_ROOT_PASSWORD}';"
-mysql "${ROOT_AUTH[@]}" -e "FLUSH PRIVILEGES;"
+cat << EOF > /tmp/init.sql
+CREATE DATABASE IF NOT EXISTS \`${SQL_DATABASE}\`;
+CREATE USER IF NOT EXISTS '${SQL_USER}'@'\%' IDENTIFIED BY '${SQL_PASSWORD}';
+GRANT ALL PRIVILEGES ON \`${SQL_DATABASE}\`.* TO '${SQL_USER}'@'%';
+ALTER USER 'root'@'localhost' IDENTIFIED BY '${SQL_ROOT_PASSWORD}';
+FLUSH PRIVILEGES;
+EOF
+
+if mysqladmin -uroot -p"${SQL_ROOT_PASSWORD}" ping --silent >/dev/null 2>&1; then
+    mysql -uroot -p"${SQL_ROOT_PASSWORD}" < /tmp/init.sql
+else
+    mysql -uroot < /tmp/init.sql
+fi
 
 mysqladmin -uroot -p"${SQL_ROOT_PASSWORD}" shutdown
 wait $pid

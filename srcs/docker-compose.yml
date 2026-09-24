@@ -8,6 +8,9 @@ services:
       dockerfile: Dockerfile
     image: mariadb:inception
     env_file: .env
+    secrets:
+      - db_password
+      - db_root_password
     volumes:
       - mariadb:/var/lib/mysql
     restart: unless-stopped
@@ -40,6 +43,9 @@ services:
       dockerfile: Dockerfile
     image: wordpress:inception
     env_file: .env
+    secrets:
+      - credentials
+      - db_password
     depends_on:
       - mariadb
     expose:
@@ -65,3 +71,11 @@ volumes:
 networks:
   inception:
     driver: bridge
+
+secrets:
+  credentials:
+    file: ../secrets/credentials.txt
+  db_password:
+    file: ../secrets/db_password.txt
+  db_root_password:
+    file: ../secrets/db_root_password.txt

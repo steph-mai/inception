@@ -1,4 +1,13 @@
 #!/bin/bash
+set -e
+
+if [ -f "/run/secrets/credentials" ]; then
+    . /run/secrets/credentials
+fi
+
+if [ -f "/run/secrets/db_password" ]; then
+    . /run/secrets/db_password
+fi
 
 until (echo > /dev/tcp/mariadb/3306) >/dev/null 2>&1; do
     sleep 1
