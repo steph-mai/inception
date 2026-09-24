@@ -31,7 +31,7 @@ Before accessing the site, ensure your local DNS resolves the domain name. If ac
 For security reasons, no passwords are hardcoded in the source code. All credentials and configuration variables are strictly managed locally via a hidden environment file.
 
 *   **Location:** The file must be created at `srcs/.env`.
-*   **Management:** This file defines the database passwords, the WordPress administrator account, and the standard user account. If you need to change a password, stop the project (`make down`), edit the `.env` file, and restart (`make`).
+*   **Management:** This file defines the database passwords, the WordPress administrator account, and the standard user account. If you need to change a password, stop the project (`make down`), edit the `.env` file, and restart (`make all`).
 
 ## 5. Checking Service Health
 To verify that all services are running correctly:
