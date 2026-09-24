@@ -54,6 +54,16 @@ services:
     volumes:
       - wordpress:/var/www/wordpress
 
+  adminer:
+      build: ./requirements/bonus/adminer
+      image: adminer:inception
+      container_name: adminer
+      restart: on-failure
+      networks:
+        - inception
+      depends_on:
+        - mariadb
+
 volumes:
   wordpress:
     driver: local
