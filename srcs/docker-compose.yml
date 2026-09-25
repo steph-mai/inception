@@ -23,6 +23,7 @@ services:
       - inception
     depends_on:
       - wordpress
+      - static_site
     build:
       context: ./requirements/nginx
       dockerfile: Dockerfile
@@ -63,6 +64,17 @@ services:
         - inception
       depends_on:
         - mariadb
+
+  static_site:
+    build:
+      context: ./requirements/bonus/static_site
+      dockerfile: Dockerfile
+    container_name: static_site
+    networks:
+      - inception
+    restart: always
+    expose:
+      - "8080"
 
 volumes:
   wordpress:
