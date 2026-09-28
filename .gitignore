@@ -1,33 +1,13 @@
-secrets/
+.env
 srcs/.env
-data/
-
-.DS_Store
-.vscode/
-.cache/
-.docker/
-.ssh/
-
-.bash_history
-.bash_logout
-.bashrc
-.profile
-.wget-hsts
-.sudo_as_admin_successful
-.vscode-server/
+secrets/
 
 data/
 wp-content/
-.dotnet/
 
-.lesshst
-.ICEauthority
-.Xauthority
-.config/
-.dmrc
-.local/
-.mozilla/
-.xsession-errors
-.xsession-errors.old
-Downloads/
+.DS_Store
+.vscode/
+.vscode-server/
 
+.cache/
+.docker/
