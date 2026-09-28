@@ -17,8 +17,8 @@ clean:
 	${DOCKER} compose -f ${COMPOSE_FILE} down --rmi all -v
 
 fclean: clean
-	sudo rm -rf /home/stmaire/data/wordpress/*
-	sudo rm -rf /home/stmaire/data/mariadb/*
+	sudo rm -rf /home/stmaire/data/wordpress
+	sudo rm -rf /home/stmaire/data/mariadb
 
 re: fclean all
 

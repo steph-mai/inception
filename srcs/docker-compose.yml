@@ -70,11 +70,12 @@ services:
       context: ./requirements/bonus/static_site
       dockerfile: Dockerfile
     container_name: static_site
+    image: static_site:inception
     networks:
       - inception
     restart: always
     expose:
-      - "8080"
+      - "4000"
 
 volumes:
   wordpress:
