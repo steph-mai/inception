@@ -77,6 +77,20 @@ services:
     expose:
       - "4000"
 
+  filebrowser:
+    build:
+      context: ./requirements/bonus/filebrowser
+      dockerfile: Dockerfile
+    container_name: filebrowser
+    image: filebrowser:inception
+    networks:
+      - inception
+    volumes:
+      - wordpress:/var/www/wordpress
+    restart: on-failure
+    expose:
+      - "5000"
+
 volumes:
   wordpress:
     driver: local
