@@ -5,6 +5,7 @@ DOCKER      = /usr/bin/docker
 all:
 	@mkdir -p /home/stmaire/data/wordpress
 	@mkdir -p /home/stmaire/data/mariadb
+	@mkdir -p /home/stmaire/data/static_site
 	${DOCKER} compose -f ${COMPOSE_FILE} up --build -d
 
 down:
@@ -19,6 +20,8 @@ clean:
 fclean: clean
 	sudo rm -rf /home/stmaire/data/wordpress
 	sudo rm -rf /home/stmaire/data/mariadb
+	sudo rm -rf /home/stmaire/data/static_site
+
 
 re: fclean all
 

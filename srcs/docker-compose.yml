@@ -73,6 +73,8 @@ services:
     image: static_site:inception
     networks:
       - inception
+    volumes:
+      - static_site:/var/www/static
     restart: always
     expose:
       - "4000"
@@ -104,6 +106,12 @@ volumes:
       type: 'none'
       o: 'bind'
       device: '/home/stmaire/data/mariadb'
+  static_site:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/stmaire/data/static_site'
 
 networks:
   inception:
