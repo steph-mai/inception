@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-echo "Starting MariaDB entrypoint..."
-
 if [ -f "/run/secrets/db_password" ]; then
     . /run/secrets/db_password
 fi
@@ -11,9 +9,7 @@ if [ -f "/run/secrets/db_root_password" ]; then
     . /run/secrets/db_root_password
 fi
 
-echo "Checking initialization flag..."
 if [ ! -f "/var/lib/mysql/.initialized" ]; then
-    echo "Initializing database..."
     mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql >/dev/null 2>&1
 
     mysqld --user=mysql --skip-networking &
@@ -38,9 +34,6 @@ EOF
     mysqladmin -uroot -p"${SQL_ROOT_PASSWORD}" shutdown
     wait $pid
     touch /var/lib/mysql/.initialized
-    echo "Database initialized"
-else
-    echo "Database already initialized"
 fi
 
 exec mysqld --user=mysql
